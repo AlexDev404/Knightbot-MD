@@ -1,6 +1,7 @@
 const isAdmin = require('../lib/isAdmin');
 
-async function deleteCommand(sock, chatId, message, senderId) {
+async function deleteCommand(sock, chatId, message) {
+    const senderId = message.key.participant || message.key.remoteJid;
     const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
 
     if (!isBotAdmin) {

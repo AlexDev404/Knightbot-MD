@@ -312,7 +312,7 @@ async function startXeonBotInc() {
       console.log(chalk.magenta(` `));
       console.log(
         chalk.yellow(
-          `🌿Connected to => ` + JSON.stringify(XeonBotInc.user, null, 2)
+          `🌿 Connected to => ` + JSON.stringify(XeonBotInc.user, null, 2)
         )
       );
 
