@@ -1,7 +1,8 @@
 async function groupInfoCommand(sock, chatId, msg) {
     try {
         // Get group metadata
-        const groupMetadata = await sock.groupMetadata(chatId);
+        // const groupMetadata = await sock.groupMetadata(chatId);
+        const groupMetadata = global.groupMetadata;
         
         // Get group profile picture
         let pp;

@@ -24,6 +24,7 @@ global.commandHandler = commandHandler; // Make commandHandler globally accessib
 const permissionManager = new PermissionManager();
 const messageParser = new MessageParser();
 const messageProcessor = new MessageProcessor();
+global.groupMetadata = undefined;
 
 async function handleMessages(sock, messageUpdate, printLog) {
   try {
@@ -36,6 +37,12 @@ async function handleMessages(sock, messageUpdate, printLog) {
     // Parse message and extract context
     const messageData = messageParser.parseMessage(message);
     const context = messageParser.getMessageContext(message);
+
+    // Assign group metadata if not already assigned
+    if (global.groupMetadata == undefined) {
+      console.log("[MAIN]: Assigning group metadata");
+      global.groupMetadata = await sock.groupMetadata(context.chatId);
+    }
 
     // Add special message type checks
     messageData.isProtocolMessage = messageParser.isProtocolMessage(message);
