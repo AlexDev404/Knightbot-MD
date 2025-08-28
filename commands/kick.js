@@ -71,6 +71,18 @@ async function kickCommand(sock, chatId, ctx) {
     return;
   }
 
+  // Check if the user is trying to kick themselves
+  if (usersToKick.includes(senderId)) {
+    await sock.sendMessage(
+      chatId,
+      {
+        text: "You can't kick yourself 😐",
+      },
+      { quoted: ctx }
+    );
+    return;
+  }
+
   try {
     await sock.groupParticipantsUpdate(chatId, usersToKick, "remove");
 
