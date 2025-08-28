@@ -1,4 +1,4 @@
-const { handleAntiBadwordCommand } = require("../lib/antibadword");
+const { handleAntiBadwordCommand } = require("../lib/automod");
 const isAdmin = require("../lib/isAdmin");
 
 async function antibadwordCommand(sock, chatId, message) {
