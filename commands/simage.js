@@ -16,11 +16,12 @@ const scheduleFileDeletion = (filePath) => {
         } catch (error) {
             console.error(`Failed to delete file:`, error);
         }
-    }, 10000); // 5 minutes
+    }, 60000); // 60 seconds
 };
 
-const convertStickerToImage = async (sock, quotedMessage, chatId) => {
+const convertStickerToImage = async (sock, chatId, ctx, args) => {
     try {
+        const quotedMessage = ctx.message.extendedTextMessage.contextInfo.quotedMessage;
         const stickerMessage = quotedMessage.stickerMessage;
         if (!stickerMessage) {
             await sock.sendMessage(chatId, { text: 'Reply to a sticker with .simage to convert it.' });
@@ -38,7 +39,7 @@ const convertStickerToImage = async (sock, quotedMessage, chatId) => {
         await sharp(stickerFilePath).toFormat('png').toFile(outputImagePath);
 
         const imageBuffer = await fsPromises.readFile(outputImagePath);
-        await sock.sendMessage(chatId, { image: imageBuffer, caption: 'Here is the converted image!' });
+        await sock.sendMessage(chatId, { image: imageBuffer, caption: '✨ Here\'s your image!' });
 
         scheduleFileDeletion(stickerFilePath);
         scheduleFileDeletion(outputImagePath);
