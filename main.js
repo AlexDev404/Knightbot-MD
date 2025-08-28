@@ -18,6 +18,12 @@ const fs = require("fs");
 global.packname = settings.packname;
 global.author = settings.author;
 
+const Filter = require("bad-words");
+const filter = new Filter();
+global.badWordFilter = filter;
+// filter.addWords(["hitler"]);  // Add custom bad words here
+
+
 // Initialize modular components
 const commandHandler = new CommandHandler();
 global.commandHandler = commandHandler; // Make commandHandler globally accessible if needed
