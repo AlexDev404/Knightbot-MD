@@ -21,6 +21,17 @@ async function wastedCommand(sock, chatId, message) {
         return;
     }
 
+    const args = message.message?.extendedTextMessage?.text.split(" ");
+    const selection = args[1] || "wasted";
+
+    if (!['wasted', 'passed', 'triggered', 'jail'].includes(selection.toLowerCase())) {
+        await sock.sendMessage(chatId, {
+            text: `❌ Invalid option! Use: ${settings.prefix}wasted <wasted/passed/triggered/jail>`,
+            ...channelInfo
+        });
+        return;
+    }
+
     try {
         // Get user's profile picture
         let profilePic;
@@ -32,7 +43,7 @@ async function wastedCommand(sock, chatId, message) {
 
         // Get the wasted effect image
         const wastedResponse = await axios.get(
-            `https://some-random-api.com/canvas/overlay/wasted?avatar=${encodeURIComponent(profilePic)}`,
+            `https://some-random-api.com/canvas/overlay/${selection}?avatar=${encodeURIComponent(profilePic)}`,
             { responseType: 'arraybuffer' }
         );
 

@@ -5,7 +5,6 @@ const path = require('path');
 const settings = require('../settings');
 const webp = require('node-webpmux');
 const crypto = require('crypto');
-const settings = require("../settings");
 
 async function stickerCommand(sock, chatId, message) {
     // The message that will be quoted in the reply.
