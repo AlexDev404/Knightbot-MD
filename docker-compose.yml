@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  knightbot:
+    image: knightbot-md
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      # Add any environment variables your bot needs
+      # - SESSION_ID=${SESSION_ID}
+      # - OWNER_NUMBER=${OWNER_NUMBER}
+    volumes:
+      # Persist session data
+      - ./session:/app/session
+      - ./data:/app/data
+      - ./temp:/app/temp
+      - ./tmp:/app/tmp
+    ports:
+      # If your bot has a web interface, expose the port
+      - "3000:3000"
+    networks:
+      - knightbot-network
+
+networks:
+  knightbot-network:
+    driver: bridge
+
+volumes:
+  session-data:
+  bot-data:
