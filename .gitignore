@@ -172,3 +172,4 @@ yarn-error.log*
 ./session
 baileys_store.json
 data/messageCount.json
+session copy/
