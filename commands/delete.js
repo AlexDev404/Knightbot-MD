@@ -1,4 +1,5 @@
 const isAdmin = require('../lib/isAdmin');
+const settings = require("../settings");
 
 async function deleteCommand(sock, chatId, message) {
     const senderId = message.key.participant || message.key.remoteJid;
@@ -10,7 +11,7 @@ async function deleteCommand(sock, chatId, message) {
     }
 
     if (!isSenderAdmin) {
-        await sock.sendMessage(chatId, { text: 'Only admins can use the .delete command.' });
+        await sock.sendMessage(chatId, { text: `Only admins can use the ${settings.prefix}delete command.` });
         return;
     }
 

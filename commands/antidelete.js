@@ -3,6 +3,7 @@ const path = require('path');
 const { tmpdir } = require('os');
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 const { writeFile } = require('fs/promises');
+const settings = require("../settings");
 
 const messageStore = new Map();
 const CONFIG_PATH = path.join(__dirname, '../data/antidelete.json');
@@ -91,7 +92,7 @@ async function handleAntideleteCommand(sock, chatId, message, match) {
     } else if (match === 'off') {
         config.enabled = false;
     } else {
-        return sock.sendMessage(chatId, { text: '*Invalid command. Use .antidelete to see usage.*' });
+        return sock.sendMessage(chatId, { text: `*Invalid command. Use ${settings.prefix}antidelete to see usage.*` });
     }
 
     saveAntideleteConfig(config);

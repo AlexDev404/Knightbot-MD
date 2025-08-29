@@ -1,5 +1,6 @@
 const axios = require("axios");
 const mumaker = require("mumaker");
+const settings = require("../settings");
 
 // Reusable message templates
 const messageTemplates = {
@@ -8,7 +9,7 @@ const messageTemplates = {
   }),
   success: (text, imageUrl) => ({
     caption: "Image of text: " + text,
-    image: { url: imageUrl }
+    image: { url: imageUrl },
   }),
 };
 
@@ -23,7 +24,7 @@ async function textmakerCommand(sock, chatId, ctx) {
       return await sock.sendMessage(
         chatId,
         messageTemplates.error(
-          "Please provide text to generate\nExample: .metallic Nick"
+          `Please provide text to generate\nExample: ${settings.prefix}textmaker <theme> Nick\n\nSupported themes: metallic, ice, snow, impressive, matrix, light, neon, devil, purple, thunder, leaves, 1917, arena, hacker, sand, blackpink, glitch, fire`
         )
       );
     }
@@ -172,4 +173,15 @@ async function textmakerCommand(sock, chatId, ctx) {
   }
 }
 
-module.exports = textmakerCommand;
+
+module.exports = {
+  name: "textmaker",
+  aliases: [],
+  description: 'Create stylish text with various effects. Usage "textmaker <theme> <text>"',
+  usage: "textmaker <theme> <text>",
+  category: "image",
+
+  async execute(sock, chatId, message, args) {
+    return await textmakerCommand(sock, chatId, message);
+  },
+};

@@ -1,6 +1,7 @@
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const settings = require("../settings");
 
 async function facebookCommand(sock, chatId, message) {
     try {
@@ -9,7 +10,7 @@ async function facebookCommand(sock, chatId, message) {
         
         if (!url) {
             return await sock.sendMessage(chatId, { 
-                text: "Please provide a Facebook video URL.\nExample: .fb https://www.facebook.com/..."
+                text: `Please provide a Facebook video URL.\nExample: ${settings.prefix}fb https://www.facebook.com/...`
             });
         }
 

@@ -5,6 +5,7 @@ const path = require('path');
 const settings = require('../settings');
 const webp = require('node-webpmux');
 const crypto = require('crypto');
+const settings = require("../settings");
 
 async function stickerCommand(sock, chatId, message) {
     // The message that will be quoted in the reply.
@@ -31,7 +32,7 @@ async function stickerCommand(sock, chatId, message) {
 
     if (!mediaMessage) {
         await sock.sendMessage(chatId, { 
-            text: 'Please reply to an image/video with .sticker, or send an image/video with .sticker as the caption.',
+            text: `Please reply to an image/video with ${settings.prefix}sticker, or send an image/video with ${settings.prefix}sticker as the caption.`,
             contextInfo: {
                 isForwarded: false
             }

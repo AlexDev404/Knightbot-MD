@@ -3,13 +3,14 @@ const path = require('path');
 const { downloadMediaMessage } = require('@whiskeysockets/baileys');
 const webp = require('node-webpmux');
 const crypto = require('crypto');
+const settings = require("../settings");
 
 async function takeCommand(sock, chatId, message, args) {
     try {
         // Check if message is a reply to a sticker
         const quotedMessage = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         if (!quotedMessage?.stickerMessage) {
-            await sock.sendMessage(chatId, { text: '❌ Reply to a sticker with .take <packname>' });
+            await sock.sendMessage(chatId, { text: `Try to reply to a sticker with ${settings.prefix}take <packname>` });
             return;
         }
 

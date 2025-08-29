@@ -1,11 +1,12 @@
 const axios = require('axios');
 const { sleep } = require('../lib/utility');
+const settings = require("../settings");
 
 async function pairCommand(sock, chatId, message, q) {
     try {
         if (!q) {
             return await sock.sendMessage(chatId, {
-                text: "Please provide valid WhatsApp number\nExample: .pair 91702395XXXX",
+                text: `Please provide valid WhatsApp number\nExample: ${settings.prefix}pair 91702395XXXX`,
                 contextInfo: {
                     forwardingScore: 1,
                     isForwarded: true,

@@ -4,6 +4,7 @@ const fsPromises = require('fs/promises');
 const fse = require('fs-extra');
 const path = require('path');
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
+const settings = require("../settings");
 
 const tempDir = './temp';
 if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir);
@@ -24,7 +25,7 @@ const convertStickerToImage = async (sock, chatId, ctx, args) => {
         const quotedMessage = ctx.message.extendedTextMessage.contextInfo.quotedMessage;
         const stickerMessage = quotedMessage.stickerMessage;
         if (!stickerMessage) {
-            await sock.sendMessage(chatId, { text: 'Reply to a sticker with .simage to convert it.' });
+            await sock.sendMessage(chatId, { text: `Reply to a sticker with ${settings.prefix}simage to convert it.` });
             return;
         }
 

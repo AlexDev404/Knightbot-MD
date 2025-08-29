@@ -7,7 +7,7 @@ module.exports = {
   name: "help",
   aliases: ["menu", "bot", "list"],
   description: "Show all available commands",
-  usage: ".help",
+  usage: "help",
   category: "general",
 
   async execute(sock, chatId, message, args) {
@@ -19,6 +19,7 @@ async function helpCommand(sock, chatId, message) {
   const helpMessage = `
 *${settings.botName || "Untitled Bot"}*  
 Version: *${settings.version || "2.0.5"}*
+Prefix: *${settings.prefix || "."}*
 
 *Available Commands:*
 ${global.commandHandler

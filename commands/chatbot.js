@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
+const settings = require("../settings");
 
 const USER_GROUP_DATA = path.join(__dirname, '../data/userGroupData.json');
 
@@ -177,7 +178,7 @@ async function handleChatbotCommand(sock, chatId, message, match) {
 
     await showTyping(sock, chatId);
     return sock.sendMessage(chatId, { 
-        text: '*Invalid command. Use .chatbot to see usage*',
+        text: `*Invalid command. Use ${settings.prefix}chatbot to see usage*`,
         quoted: message
     });
 }

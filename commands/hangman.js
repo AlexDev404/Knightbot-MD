@@ -77,11 +77,11 @@ function guessLetter(sock, chatId, letter) {
 module.exports = {
   name: "hangman",
   aliases: [],
-  description: 'Play a game of hangman. Usage ".hangman <letter>"',
-  usage: ".hangman",
+  description: 'Play a game of hangman. Usage "hangman <letter>"',
+  usage: "hangman",
   category: "games",
 
   async execute(sock, chatId, message, args) {
-    return await startHangman(sock, chatId, message);
+    return startHangman(sock, chatId, message);
   },
 };

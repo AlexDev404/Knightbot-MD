@@ -5,6 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const settings = require("../settings");
 
 // Path to store the configuration
 const configPath = path.join(__dirname, '..', 'data', 'autoread.json');
@@ -54,7 +55,7 @@ async function autoreadCommand(sock, chatId, message) {
                 config.enabled = false;
             } else {
                 await sock.sendMessage(chatId, {
-                    text: '❌ Invalid option! Use: .autoread on/off',
+                    text: `❌ Invalid option! Use: ${settings.prefix}autoread <on/off>`,
                     contextInfo: {
                         forwardingScore: 1,
                         isForwarded: true,

@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { downloadContentFromMessage } = require("@whiskeysockets/baileys");
 const isOwnerOrSudo = require("../lib/isOwner");
+const settings = require("../settings");
 
 async function setProfilePicture(sock, chatId, msg) {
   try {
@@ -19,7 +20,7 @@ async function setProfilePicture(sock, chatId, msg) {
       msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
     if (!quotedMessage) {
       await sock.sendMessage(chatId, {
-        text: "⚠️ Please reply to an image with the .setpp command!",
+        text: `⚠️ Please reply to an image with the ${settings.prefix}setpp command!`,
       });
       return;
     }

@@ -1,4 +1,5 @@
 const isAdmin = require('../lib/isAdmin');  // Move isAdmin to helpers
+const settings = require("../settings");
 
 async function tagAllCommand(sock, chatId, senderId) {
     try {
@@ -6,7 +7,7 @@ async function tagAllCommand(sock, chatId, senderId) {
         
         if (!isSenderAdmin && !isBotAdmin) {
             await sock.sendMessage(chatId, {
-                text: 'Only admins can use the .tagall command.'
+                text: `Only admins can use the ${settings.prefix}tagall command.`
             });
             return;
         }

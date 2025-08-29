@@ -1,4 +1,5 @@
 const axios = require('axios');
+const settings = require("../settings");
 
 async function imagineCommand(sock, chatId, message) {
     try {
@@ -11,7 +12,7 @@ async function imagineCommand(sock, chatId, message) {
         
         if (!imagePrompt) {
             await sock.sendMessage(chatId, {
-                text: 'Please provide a prompt for the image generation.\nExample: .imagine a beautiful sunset over mountains'
+                text: `Please provide a prompt for the image generation.\nExample: ${settings.prefix}imagine a beautiful sunset over mountains`
             }, {
                 quoted: message
             });

@@ -5,6 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const settings = require("../settings");
 
 // Path to store the configuration
 const configPath = path.join(__dirname, '..', 'data', 'autotyping.json');
@@ -54,7 +55,7 @@ async function autotypingCommand(sock, chatId, message) {
                 config.enabled = false;
             } else {
                 await sock.sendMessage(chatId, {
-                    text: '❌ Invalid option! Use: .autotyping on/off',
+                    text: `❌ Invalid option! Use: ${settings.prefix}autotyping <on/off>`,
                     contextInfo: {
                         forwardingScore: 1,
                         isForwarded: true,

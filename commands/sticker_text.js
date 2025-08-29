@@ -2,13 +2,14 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 const Jimp = require('jimp');
+const settings = require("../settings");
 
 async function attpCommand(sock, chatId, message) {
     const userMessage = message.message.conversation || message.message.extendedTextMessage?.text || '';
     const text = userMessage.split(' ').slice(1).join(' ');
 
     if (!text) {
-        await sock.sendMessage(chatId, { text: 'Please provide text after the .attp command.' });
+        await sock.sendMessage(chatId, { text: `Please provide text after the ${settings.prefix}sticker_text command.` });
         return;
     }
 

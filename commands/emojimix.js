@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const { exec } = require('child_process');
 const path = require('path');
+const settings = require("../settings");
 
 async function emojimixCommand(sock, chatId, msg) {
     try {
@@ -12,7 +13,7 @@ async function emojimixCommand(sock, chatId, msg) {
         const args = text.split(' ').slice(1);
         
         if (!args[0]) {
-            await sock.sendMessage(chatId, { text: '🎴 Example: .emojimix 😎+🥰' });
+            await sock.sendMessage(chatId, { text: `🎴 Example: ${settings.prefix}emojimix 😎+🥰` });
             return;
         }
 
@@ -94,7 +95,7 @@ async function emojimixCommand(sock, chatId, msg) {
     } catch (error) {
         console.error('Error in emojimix command:', error);
         await sock.sendMessage(chatId, { 
-            text: '❌ Failed to mix emojis! Make sure you\'re using valid emojis.\n\nExample: .emojimix 😎+🥰' 
+            text: `❌ Failed to mix emojis! Make sure you're using valid emojis.\n\nExample: ${settings.prefix}emojimix 😎+🥰` 
         });
     }
 }
