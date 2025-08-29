@@ -2,19 +2,6 @@ const settings = require("../settings");
 const fs = require("fs");
 const path = require("path");
 
-// Export in the new modular format
-module.exports = {
-  name: "help",
-  aliases: ["menu", "bot", "list"],
-  description: "Show all available commands",
-  usage: "help",
-  category: "general",
-
-  async execute(sock, chatId, message, args) {
-    return await helpCommand(sock, chatId, message);
-  },
-};
-
 async function helpCommand(sock, chatId, message) {
   const helpMessage = `
 *${settings.botName || "Untitled Bot"}*  
@@ -52,3 +39,17 @@ ${global.commandHandler
     await sock.sendMessage(chatId, { text: helpMessage });
   }
 }
+
+
+// Export in the new modular format
+module.exports = {
+  name: "help",
+  aliases: ["menu", "bot", "list"],
+  description: "Show all available commands",
+  usage: "help",
+  category: "general",
+
+  async execute(sock, chatId, message, args) {
+    return await helpCommand(sock, chatId, message);
+  },
+};
