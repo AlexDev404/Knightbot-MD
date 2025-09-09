@@ -1,12 +1,16 @@
 const isAdmin = require("../lib/isAdmin");
 
 async function kickCommand(sock, chatId, ctx) {
-  //   const message = ctx.message.conversation;
+  const message =
+    ctx.message.conversation ?? ctx.message.extendedTextMessage.text;
   const mentionedJids =
     ctx.message?.extendedTextMessage?.contextInfo?.mentionedJid || [];
   const senderId = ctx.key.participant || ctx.key.remoteJid;
+  const quotedParticipant =
+    ctx.message?.extendedTextMessage?.contextInfo?.participant;
+  const quotedMessage = ctx.message?.extendedTextMessage?.contextInfo?.stanzaId;
 
-  //   console.log(JSON.stringify(ctx));
+  const kickReason = message.split(' ').slice(1).join(' ');
   // Check if user is owner
   const isOwner = ctx.key.fromMe;
   if (!isOwner) {
@@ -42,9 +46,9 @@ async function kickCommand(sock, chatId, ctx) {
     usersToKick = mentionedJids;
   }
   // Check for replied message
-  else if (ctx.message?.extendedTextMessage?.contextInfo?.participant) {
+  else if (quotedParticipant) {
     // Check if we're the person being kicked
-    usersToKick = [ctx.message.extendedTextMessage.contextInfo.participant];
+    usersToKick = [quotedParticipant];
   }
 
   // If no user found through either method
@@ -97,6 +101,30 @@ async function kickCommand(sock, chatId, ctx) {
       text: `${usernames.join(", ")} has been kicked successfully!`,
       mentions: usersToKick,
     });
+
+    // Afterwards, delete the offending message if it exists
+    // Delete the message that was replied to (if any)
+    if (quotedMessage) {
+      await sock.sendMessage(chatId, {
+        delete: {
+          remoteJid: chatId,
+          fromMe: false,
+          id: quotedMessage,
+          participant: quotedParticipant,
+        },
+      });
+    }
+
+    // DM the kicked user with the kick reason (if any)
+    if (kickReason && kickReason.length > 0) {
+      for (const jid of usersToKick) {
+        await sock.sendMessage(jid, {
+          text: `You have been kicked from the group ${
+            chatId.split("@")[0]
+          } for the following reason:\n\n${kickReason}`,
+        });
+      }
+    }
   } catch (error) {
     console.error("Error in kick command:", error);
     await sock.sendMessage(chatId, {
@@ -105,4 +133,15 @@ async function kickCommand(sock, chatId, ctx) {
   }
 }
 
-module.exports = kickCommand;
+module.exports = {
+  name: "kick",
+  aliases: ["naenae"],
+  description:
+    'Kick a user from the group. Usage: "kick @user" or reply to a user\'s message with "kick"',
+  usage: "kick",
+  category: "admin",
+
+  async execute(sock, chatId, message, args) {
+    return kickCommand(sock, chatId, message);
+  },
+};
