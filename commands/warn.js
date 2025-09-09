@@ -121,11 +121,10 @@ async function warnCommand(sock, chatId, ctx) {
       fs.writeFileSync(warningsPath, JSON.stringify(warnings, null, 2));
 
       const warningMessage =
-        `*『 WARNING ALERT 』*\n\n` +
-        `👤 *Warned User:* @${userToWarn.split("@")[0]}\n` +
-        `⚠️ *Warning Count:* ${warnings[chatId][userToWarn]}/3\n` +
-        `👑 *Warned By:* @${senderId.split("@")[0]}\n\n` +
-        `📅 *Date:* ${new Date().toLocaleString()}`;
+        `*Be careful!*\n\n` +
+        `@${userToWarn.split("@")[0]}\n` +
+        `count ${warnings[chatId][userToWarn]}/3\n` +
+        `${new Date().toLocaleString()}`;
 
       await sock.sendMessage(chatId, {
         text: warningMessage,
@@ -142,7 +141,7 @@ async function warnCommand(sock, chatId, ctx) {
         fs.writeFileSync(warningsPath, JSON.stringify(warnings, null, 2));
 
         const kickMessage =
-          `*『 AUTO-KICK 』*\n\n` +
+          `*AUTO-KICK*\n=================\n` +
           `@${
             userToWarn.split("@")[0]
           } has been removed from the group after receiving 3 warnings! ⚠️`;
